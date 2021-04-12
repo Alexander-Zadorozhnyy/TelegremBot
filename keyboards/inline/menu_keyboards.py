@@ -1,12 +1,13 @@
 from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 
 from keyboards.inline import buy_item
-from keyboards.inline.commands import get_categories, count_items, make_callback_data, get_cat_items
+from keyboards.inline.callback_datas import add_item
+from states.commands import get_categories, count_items, make_callback_data, get_cat_items
 
 
 async def categories_keyboard():
     CURRENT_LEVEL = 0
-    markup = InlineKeyboardMarkup()
+    markup = InlineKeyboardMarkup(resize_keyboard=True)
     categories = get_categories()['categories']
     for category in categories:
         number_of_items = await count_items(category['name'])
@@ -24,7 +25,7 @@ async def categories_keyboard():
 
 async def items_keyboard(category):
     CURRENT_LEVEL = 1
-    markup = InlineKeyboardMarkup(row_width=1)
+    markup = InlineKeyboardMarkup(row_width=1, resize_keyboard=True)
     items = await get_cat_items(category)
     for item in items:
         button_text = f"{item[0]['name']} - ₽{item[0]['price']}"
@@ -45,10 +46,14 @@ async def items_keyboard(category):
 
 def item_keyboard(category, item_id):
     CURRENT_LEVEL = 2
-    markup = InlineKeyboardMarkup()
+    markup = InlineKeyboardMarkup(resize_keyboard=True)
     markup.row(
         InlineKeyboardButton(text="Купить",
                              callback_data=buy_item.new(item_id=item_id))
+    )
+    markup.row(
+        InlineKeyboardButton(text="Добавить в карзину",
+                             callback_data=add_item.new(item_id=item_id))
     )
     markup.row(
         InlineKeyboardButton(

@@ -4,6 +4,8 @@ from .menu import dp
 from .sell_items import dp
 from.testing import dp
 from .dice import dp
+from .add_new_item import dp
+from .start_menu_admin import dp
 from .start_menu import dp
 from .echo import dp  # Обязательно последний импорт.
 

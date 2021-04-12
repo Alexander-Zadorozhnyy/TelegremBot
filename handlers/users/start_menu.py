@@ -1,13 +1,10 @@
 from typing import Union
-
 from aiogram.dispatcher.filters import Command
-from aiogram.types import CallbackQuery
-
 from aiogram import types
 
 from keyboards.inline import menu_cd
 from keyboards.inline.menu_keyboards import categories_keyboard, items_keyboard, item_keyboard
-from keyboards.inline.commands import get_item
+from states.commands import get_item, get_image
 from loader import dp
 
 
@@ -28,7 +25,7 @@ async def list_categories(message: Union[types.Message, types.CallbackQuery], **
 
 async def list_items(callback: types.CallbackQuery, category, **kwargs):
     markup = await items_keyboard(category=category)
-    await callback.message.edit_text("По вашей категории нашлось:", reply_markup=markup)
+    await callback.message.answer("По вашей категории нашлось:", reply_markup=markup)
 
 
 async def show_item(callback: types.CallbackQuery, category, item_id):
@@ -40,7 +37,10 @@ async def show_item(callback: types.CallbackQuery, category, item_id):
     for el in range(0, len(txt), 2):
         all_str = '\n'.join([all_str, ':   '.join([txt[el], txt[el + 1]])])
     text = ''.join([text, all_str])
-    await callback.message.edit_text(text, reply_markup=markup)
+    get_image(item['content'])
+    with open(f'keyboards/inline/img/{item["content"]}', 'rb') as photo:
+        await callback.message.reply_photo(photo, allow_sending_without_reply=False)
+    await callback.message.answer(text, reply_markup=markup)
 
 
 @dp.callback_query_handler(menu_cd.filter())
@@ -60,4 +60,4 @@ async def navigate(call: types.CallbackQuery, callback_data: dict):
     await current_Level_function(call,
                                  category=category,
                                  item_id=item_id
-    )
+                                 )

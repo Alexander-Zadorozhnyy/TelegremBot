@@ -24,7 +24,7 @@ async def answer_q1(message: types.Message, state: FSMContext):
 
 
 @dp.message_handler(state=Test.Q2)
-async def answer_q2(message: types.Message, state=FSMContext):
+async def answer_q2(message: types.Message, state: FSMContext):
     data = await state.get_data()
     answer1 = data.get("answer1")
     answer2 = message.text
