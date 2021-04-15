@@ -11,6 +11,7 @@ async def show_admin_start(message: types.Message):
         await message.answer("Приветствуем вас в панели администратора :) \n"
                              "Вот список всех команд: \n"
                              "/start_menu - для входа в меню пользователя \n"
+                             "/show_all_users - для просмотра всех пользователей сайта \n"
                              "/add_item - для добавления товара \n"
                              "/show_question - для просмотра вопросов по тех.поддержке \n"
                              "/see_all_users - для просмотра всех пользователей бота")

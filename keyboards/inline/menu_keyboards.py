@@ -1,5 +1,6 @@
 from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 
+from data.config import PEAR_URL
 from keyboards.inline import buy_item
 from keyboards.inline.callback_datas import add_item
 from states.commands import get_categories, count_items, make_callback_data, get_cat_items
@@ -49,7 +50,8 @@ def item_keyboard(category, item_id):
     markup = InlineKeyboardMarkup(resize_keyboard=True)
     markup.row(
         InlineKeyboardButton(text="Купить",
-                             callback_data=buy_item.new(item_id=item_id))
+                             callback_data=buy_item.new(item_id=item_id),
+                             url=PEAR_URL)
     )
     markup.row(
         InlineKeyboardButton(text="Добавить в карзину",

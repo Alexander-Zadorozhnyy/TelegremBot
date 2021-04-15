@@ -41,6 +41,10 @@ async def get_cat_items(category):
     return right_items
 
 
+async def get_users():
+    return get('http://localhost:5000/api/v2/users').json()['users']
+
+
 async def get_item(id):
     return get(f'http://localhost:5000/api/v2/items/{id}').json()['items']
 

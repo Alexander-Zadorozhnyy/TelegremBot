@@ -3,6 +3,7 @@ from aiogram.dispatcher.filters import Command
 from aiogram import types
 
 from keyboards.inline import menu_cd
+from keyboards.inline.callback_datas import add_item
 from keyboards.inline.menu_keyboards import categories_keyboard, items_keyboard, item_keyboard
 from states.commands import get_item, get_image
 from loader import dp
@@ -61,3 +62,8 @@ async def navigate(call: types.CallbackQuery, callback_data: dict):
                                  category=category,
                                  item_id=item_id
                                  )
+
+
+'''@dp.callback_query_handler(add_item.filter())
+async def add_item_db(call: types.CallbackQuery, callback_data: dict):
+'''
